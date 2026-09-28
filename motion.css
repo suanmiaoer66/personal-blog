@@ -10,6 +10,21 @@
   pointer-events: none;
 }
 
+/* Fade the whole module, including its background color, without moving its box. */
+.motion-active .motion-section {
+  opacity: 0;
+  transition: opacity 850ms cubic-bezier(.22, .61, .36, 1);
+}
+
+.motion-active .motion-section.is-section-visible {
+  opacity: 1;
+}
+
+.motion-active .motion-section:focus-within {
+  opacity: 1;
+  transition: none;
+}
+
 .motion-active .motion-item {
   opacity: 0;
   translate: 0 var(--reveal-distance, 72px);
@@ -20,7 +35,7 @@
 .motion-active :is(.section-heading, .section-label) { --reveal-distance: 88px; }
 .motion-active :is(.project-card, .article-card) {
   --reveal-distance: 100px;
-  transition-duration: 1200ms, 1400ms;
+  transition-duration: 900ms, 1100ms;
 }
 .motion-active .hero-visual { --reveal-distance: 110px; }
 
@@ -81,6 +96,7 @@
 
 @media (prefers-reduced-motion: reduce), print {
   .scroll-progress { display: none; }
+  .motion-active .motion-section,
   .motion-active .motion-item,
   .motion-active .hero-copy {
     opacity: 1 !important;

@@ -11,6 +11,7 @@
     const hero = document.querySelector('.hero');
     const main = document.querySelector('main');
     const compact = window.matchMedia('(max-width: 800px)');
+    const sections = [...document.querySelectorAll('main > section:not(#home), main > .quote-strip')];
     const items = [...document.querySelectorAll([
       '.hero-copy > *', '.hero-visual', '.hero-bottom',
       '.section-label', '.about-copy > *', '.section-heading',
@@ -38,13 +39,17 @@
       groups.forEach((group) => {
         group.filter((item) => !item.hidden).forEach((item, index) => {
           const isCard = item.matches('.project-card, .article-card');
-          const delay = isCard ? index * 1000 : Math.min(index, 4) * (compact.matches ? 60 : 110);
+          const delay = isCard ? index * 350 : Math.min(index, 4) * (compact.matches ? 60 : 110);
           item.style.setProperty('--reveal-delay', `${delay}ms`);
         });
       });
     }
 
     function reveal(item, immediate = false) {
+      if (item.classList.contains('motion-section')) {
+        item.classList.add('is-section-visible');
+        return;
+      }
       if (immediate) item.style.setProperty('--reveal-delay', '0ms');
       item.classList.add('is-visible');
       item.classList.remove('motion-above');
@@ -64,8 +69,10 @@
           // Reset only after leaving the real viewport, never mid-paragraph.
           const rect = entry.boundingClientRect;
           if (rect.height && (rect.bottom <= 0 || rect.top >= window.innerHeight)) {
-            item.classList.remove('is-visible');
-            item.classList.toggle('motion-above', rect.bottom <= 0);
+            item.classList.remove('is-visible', 'is-section-visible');
+            if (item.classList.contains('motion-item')) {
+              item.classList.toggle('motion-above', rect.bottom <= 0);
+            }
           }
         }
       }
@@ -104,10 +111,10 @@
 
     function onFocus(event) {
       // The form's browser validation can scroll directly to an offscreen input.
-      let item = event.target.closest('.motion-item');
+      let item = event.target.closest('.motion-item, .motion-section');
       while (item) {
         reveal(item, true);
-        item = item.parentElement?.closest('.motion-item');
+        item = item.parentElement?.closest('.motion-item, .motion-section');
       }
     }
 
@@ -129,6 +136,12 @@
     const resizeObserver = 'ResizeObserver' in window ? new ResizeObserver(schedulePaint) : null;
     if (main) resizeObserver?.observe(main);
 
+    // Observe the full section so its existing background fades with the module.
+    // No section translation: adjacent color bands keep their original layout.
+    sections.forEach((section) => {
+      section.classList.add('motion-section');
+      observer.observe(section);
+    });
     items.forEach((item) => {
       item.classList.add('motion-item');
       observer.observe(item);
@@ -153,6 +166,9 @@
       window.removeEventListener('pageshow', schedulePaint);
       document.removeEventListener('focusin', onFocus);
       root.classList.remove('motion-active');
+      sections.forEach((section) => {
+        section.classList.remove('motion-section', 'is-section-visible');
+      });
       items.forEach((item) => {
         item.classList.remove('motion-item', 'is-visible', 'motion-above');
         item.style.removeProperty('--reveal-delay');
