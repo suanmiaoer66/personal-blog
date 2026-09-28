@@ -12,13 +12,17 @@
 
 .motion-active .motion-item {
   opacity: 0;
-  translate: 0 28px;
-  transition: opacity 720ms ease, translate 800ms cubic-bezier(.22, 1, .36, 1);
+  translate: 0 var(--reveal-distance, 72px);
+  transition: opacity 850ms ease, translate 1050ms cubic-bezier(.22, .8, .3, 1);
   transition-delay: 0ms;
 }
 
+.motion-active :is(.section-heading, .section-label) { --reveal-distance: 88px; }
+.motion-active :is(.project-card, .article-card) { --reveal-distance: 100px; }
+.motion-active .hero-visual { --reveal-distance: 110px; }
+
 .motion-active .motion-item.motion-above {
-  translate: 0 -18px;
+  translate: 0 -44px;
 }
 
 .motion-active .motion-item.is-visible {
@@ -61,8 +65,10 @@
 }
 
 @media (max-width: 800px) {
-  .motion-active .motion-item { translate: 0 18px; }
-  .motion-active .motion-item.motion-above { translate: 0 -10px; }
+  .motion-active .motion-item { --reveal-distance: 44px; }
+  .motion-active :is(.section-heading, .section-label) { --reveal-distance: 54px; }
+  .motion-active :is(.project-card, .article-card, .hero-visual) { --reveal-distance: 64px; }
+  .motion-active .motion-item.motion-above { translate: 0 -28px; }
   .motion-active .motion-item.is-visible { translate: 0 0; }
   .motion-active .hero-copy { opacity: 1; translate: none; }
   .motion-active .hero-visual { filter: none; }
