@@ -1,0 +1,84 @@
+/* Content stays visible unless the motion controller is running. */
+.scroll-progress {
+  position: fixed;
+  z-index: 60;
+  inset: 0 0 auto;
+  height: 2px;
+  background: var(--rust);
+  transform: scaleX(var(--scroll-progress, 0));
+  transform-origin: left center;
+  pointer-events: none;
+}
+
+.motion-active .motion-item {
+  opacity: 0;
+  translate: 0 28px;
+  transition: opacity 720ms ease, translate 800ms cubic-bezier(.22, 1, .36, 1);
+  transition-delay: 0ms;
+}
+
+.motion-active .motion-item.motion-above {
+  translate: 0 -18px;
+}
+
+.motion-active .motion-item.is-visible {
+  opacity: 1;
+  translate: 0 0;
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+/* Avoid creating extra scrollable space beneath the last section. */
+.motion-active .site-footer.motion-item { translate: none; }
+
+/* Tab navigation and native form validation must never focus invisible content. */
+.motion-active .motion-item:focus-within {
+  opacity: 1;
+  translate: none;
+  transition: none;
+}
+
+.motion-active .hero-copy {
+  opacity: var(--hero-opacity, 1);
+  translate: 0 var(--hero-drift, 0px);
+}
+
+.motion-active .hero-visual .photo-frame {
+  translate: 0 var(--portrait-drift, 0px);
+}
+
+.motion-active .hero-visual {
+  /* Keep the scroll fade independent of the entrance reveal. */
+  filter: opacity(var(--hero-opacity, 1));
+}
+
+.motion-active .photo-badge {
+  transform: rotate(calc(15deg + var(--badge-turn, 0deg)));
+}
+
+.motion-active .hero-copy:focus-within {
+  opacity: 1;
+  translate: none;
+}
+
+@media (max-width: 800px) {
+  .motion-active .motion-item { translate: 0 18px; }
+  .motion-active .motion-item.motion-above { translate: 0 -10px; }
+  .motion-active .motion-item.is-visible { translate: 0 0; }
+  .motion-active .hero-copy { opacity: 1; translate: none; }
+  .motion-active .hero-visual { filter: none; }
+  .motion-active .hero-visual .photo-frame { translate: none; }
+  .motion-active .photo-badge { transform: rotate(15deg); }
+}
+
+@media (prefers-reduced-motion: reduce), print {
+  .scroll-progress { display: none; }
+  .motion-active .motion-item,
+  .motion-active .hero-copy {
+    opacity: 1 !important;
+    translate: none !important;
+    transition: none !important;
+  }
+  .motion-active .hero-visual { filter: none !important; }
+  .motion-active .hero-visual .photo-frame { translate: none !important; }
+  .motion-active .photo-badge { transform: rotate(15deg) !important; }
+}
