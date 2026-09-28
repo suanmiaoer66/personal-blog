@@ -18,7 +18,10 @@
 }
 
 .motion-active :is(.section-heading, .section-label) { --reveal-distance: 88px; }
-.motion-active :is(.project-card, .article-card) { --reveal-distance: 100px; }
+.motion-active :is(.project-card, .article-card) {
+  --reveal-distance: 100px;
+  transition-duration: 1200ms, 1400ms;
+}
 .motion-active .hero-visual { --reveal-distance: 110px; }
 
 .motion-active .motion-item.motion-above {

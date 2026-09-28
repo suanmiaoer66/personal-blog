@@ -37,7 +37,8 @@
     function updateDelays() {
       groups.forEach((group) => {
         group.filter((item) => !item.hidden).forEach((item, index) => {
-          const delay = Math.min(index, 4) * (compact.matches ? 60 : 110);
+          const isCard = item.matches('.project-card, .article-card');
+          const delay = isCard ? index * 1000 : Math.min(index, 4) * (compact.matches ? 60 : 110);
           item.style.setProperty('--reveal-delay', `${delay}ms`);
         });
       });
