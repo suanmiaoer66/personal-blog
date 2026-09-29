@@ -2,8 +2,8 @@
   --page: #edf0f2;
   --surface: #e3e8ed;
   --card: #f1f3f5;
-  --ink: #172e46;
-  --muted: #526172;
+  --ink: #111111;
+  --muted: #111111;
   --line: #c8d1da;
   --accent: #305878;
   --dark: #111111;
@@ -77,7 +77,7 @@ figure, h1, h2, h3, p { margin: 0; }
 .resume-description { color: var(--muted); margin-top: 13px; font-size: 15px; }
 .resume-points { margin: 15px 0 0; padding-left: 18px; color: var(--muted); font-size: 15px; }
 .resume-points li + li { margin-top: 6px; }
-.resume-points li::marker { color: var(--accent); }
+.resume-points li::marker { color: var(--ink); }
 .skills-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
 .skill-card { border: 1px solid var(--line); border-top: 3px solid var(--accent); background: var(--card); padding: 23px 20px; }
 .skill-card h3 { font-size: 19px; font-weight: 600; padding-bottom: 16px; border-bottom: 1px solid var(--line); }
@@ -149,7 +149,7 @@ figure, h1, h2, h3, p { margin: 0; }
   #site-nav.is-open { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 25px; }
   .nav-link { padding: 10px 0; font-size: 15px; }
   .nav-contact { border: 0; }
-  .nav-contact:hover, .nav-contact.active { background: transparent; color: var(--accent); }
+  .nav-contact:hover, .nav-contact.active { background: transparent; color: var(--ink); }
   .profile-section { padding-block: 34px 45px; }
   .profile-layout { grid-template-columns: 1fr 215px; gap: 30px; }
   .hero-copy h1 { font-size: 36px; }
