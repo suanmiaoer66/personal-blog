@@ -34,105 +34,45 @@
     }
   });
 
-  const projects = {
-    fundamentals: {
-      eyebrow: 'FINANCIAL ANALYSIS · 示例案例 01',
-      title: '公司财务与估值分析',
-      subtitle: '从公开披露到估值假设，呈现可追溯的分析过程。',
-      meta: '案例方向 · 基本面研究 / 财务建模',
-      content: `
-        <h3>研究问题与资料</h3>
-        <p>以一家上市公司为研究对象，整理公开年报中的业务结构、收入来源与财务披露。记录数据口径及来源，区分已披露事实与模型假设。</p>
-        <h3>分析方法</h3>
-        <p>联动利润表、资产负债表和现金流量表，观察盈利能力、营运资本与现金流。结合 DCF 和可比公司估值，并对收入增速、利润率、折现率进行敏感性分析。</p>
-        <h3>交付与边界</h3>
-        <p>计划产出估值模型、假设说明及风险摘要。展示重点是分析方法与推导逻辑，不包含真实投资建议或业绩结果。</p>
-        <div class="detail-grid"><div><h4>示例角色</h4><p>资料整理、财务分析与估值建模。</p></div><div><h4>工具</h4><p>Excel / Python</p></div></div>`
-    },
-    allocation: {
-      eyebrow: 'PORTFOLIO ANALYSIS · 示例案例 02',
-      title: '多资产组合分析',
-      subtitle: '通过数据整理与可视化，理解资产之间的风险关系。',
-      meta: '案例方向 · 数据分析 / 资产配置',
-      content: `
-        <h3>数据与问题</h3>
-        <p>选取股票、债券等资产的公开价格序列，核对币种、频率及样本区间。统一日期与缺失值处理规则，说明收益口径和数据限制。</p>
-        <h3>分析方法</h3>
-        <p>计算收益、波动率与相关性，比较不同权重下的组合特征。用时间序列图、相关性矩阵及风险图表，解释单一资产与组合之间的差异。</p>
-        <h3>交付与边界</h3>
-        <p>计划产出可复用的数据处理脚本和分析报告。明确样本区间、再平衡及费用假设；历史样本仅用于理解方法，不代表未来表现。</p>
-        <div class="detail-grid"><div><h4>示例角色</h4><p>数据整理、风险计算与结果可视化。</p></div><div><h4>工具</h4><p>Python / pandas / NumPy</p></div></div>`
+  const navItems = [...document.querySelectorAll('.nav-link[href^="#"]')]
+    .map((link) => ({ link, section: document.getElementById(link.hash.slice(1)) }))
+    .filter(({ section }) => section);
+  let navFrame = 0;
+
+  function updateActiveNav() {
+    navFrame = 0;
+    if (!navItems.length) return;
+    const readingLine = Math.max(96, window.innerHeight * 0.2);
+    let activeSection = navItems[0].section;
+    navItems.forEach(({ section }) => {
+      if (section.getBoundingClientRect().top <= readingLine) activeSection = section;
+    });
+    if (window.scrollY > 0 &&
+        window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 2) {
+      activeSection = navItems[navItems.length - 1].section;
     }
-  };
-
-  const detailDialog = document.querySelector('#detail-dialog');
-  const dialogContent = document.querySelector('#dialog-content');
-
-  function openDetail(item) {
-    if (!item || !detailDialog || !dialogContent) return;
-    dialogContent.innerHTML = `
-      <p class="detail-eyebrow">${item.eyebrow}</p>
-      <h2 class="detail-title" id="detail-title">${item.title}</h2>
-      ${item.subtitle ? `<p class="detail-subtitle">${item.subtitle}</p>` : ''}
-      <p class="detail-meta">${item.meta}</p>
-      <div class="detail-body">${item.content}</div>
-      <p class="detail-note">展示案例结构的示例内容，非真实投资业绩。</p>`;
-    detailDialog.setAttribute('aria-labelledby', 'detail-title');
-    document.body.classList.add('modal-open');
-    detailDialog.showModal();
-    detailDialog.scrollTop = 0;
-    document.querySelector('#dialog-close')?.focus();
-  }
-
-  document.querySelectorAll('[data-project]').forEach((button) => {
-    button.addEventListener('click', () => openDetail(projects[button.dataset.project]));
-  });
-
-  document.querySelector('#dialog-close')?.addEventListener('click', () => detailDialog?.close());
-  detailDialog?.addEventListener('close', () => document.body.classList.remove('modal-open'));
-  detailDialog?.addEventListener('click', (event) => {
-    if (event.target !== detailDialog) return;
-    const rect = detailDialog.getBoundingClientRect();
-    if (event.clientX < rect.left || event.clientX > rect.right ||
-        event.clientY < rect.top || event.clientY > rect.bottom) {
-      detailDialog.close();
-    }
-  });
-
-  if ('IntersectionObserver' in window) {
-    const navLinks = [...document.querySelectorAll('.nav-link[href^="#"]')];
-    const observer = new IntersectionObserver((entries) => {
-      const visible = entries.filter((entry) => entry.isIntersecting);
-      if (!visible.length) return;
-      const section = visible[visible.length - 1].target;
-      navLinks.forEach((link) => {
-        const active = link.getAttribute('href') === `#${section.id}`;
-        link.classList.toggle('active', active);
-        if (active) link.setAttribute('aria-current', 'location');
-        else link.removeAttribute('aria-current');
-      });
-    }, { rootMargin: '-15% 0px -65% 0px', threshold: 0 });
-    const observed = new Set();
-    navLinks.forEach((link) => {
-      const section = document.getElementById(link.hash.slice(1));
-      if (section && !observed.has(section)) {
-        observer.observe(section);
-        observed.add(section);
-      }
+    navItems.forEach(({ link, section }) => {
+      const active = section === activeSection;
+      link.classList.toggle('active', active);
+      if (active) link.setAttribute('aria-current', 'location');
+      else link.removeAttribute('aria-current');
     });
   }
+
+  function scheduleActiveNav() {
+    if (!navFrame) navFrame = window.requestAnimationFrame(updateActiveNav);
+  }
+
+  window.addEventListener('scroll', scheduleActiveNav, { passive: true });
+  window.addEventListener('resize', scheduleActiveNav);
+  window.addEventListener('load', scheduleActiveNav);
+  updateActiveNav();
 
   const contactForm = document.querySelector('#contact-form');
   const formStatus = document.querySelector('#form-status');
   const submitButton = document.querySelector('#submit-button');
   const configuredEndpoint = typeof window.SITE_CONFIG?.contactEndpoint === 'string'
     ? window.SITE_CONFIG.contactEndpoint.trim() : '';
-  if (configuredEndpoint) {
-    const formDemoNote = document.querySelector('.form-demo-note');
-    if (formDemoNote) {
-      formDemoNote.textContent = '提交后会将填写的信息发送至本站联络服务。';
-    }
-  }
   let isSubmitting = false;
 
   function setFormStatus(message, state) {
@@ -163,7 +103,7 @@
 
     const endpoint = configuredEndpoint;
     if (!endpoint) {
-      setFormStatus('表单填写正确。当前为演示模式，留言尚未发送。', 'demo');
+      setFormStatus('留言尚未发送，联络服务暂未开通。', 'demo');
       return;
     }
 

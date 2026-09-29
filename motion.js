@@ -11,15 +11,15 @@
     const hero = document.querySelector('.hero');
     const main = document.querySelector('main');
     const compact = window.matchMedia('(max-width: 800px)');
-    const sections = [...document.querySelectorAll('main > section:not(#home)')];
+    const sections = [...document.querySelectorAll('main > section')];
     const items = [...document.querySelectorAll([
       '.hero-copy > *', '.hero-visual',
-      '.section-label', '.about-copy > *', '.research-heading',
-      '.resume-row', '.skill-card', '.project-card',
-      '.interest-visual', '.interest-item',
+      '.section-label',
+      '.resume-row', '.skill-card',
+      '.interest-card',
       '.contact-copy > :not(.copy-status)',
       '.contact-form > .form-row', '.contact-form > .field',
-      '.contact-form > .form-footer', '.contact-form > .form-demo-note',
+      '.contact-form > .form-footer',
       '.site-footer'
     ].join(','))];
     const groups = [
@@ -30,10 +30,7 @@
       ...[...document.querySelectorAll('.skills-grid')].map((grid) => ({
         items: [...grid.querySelectorAll('.skill-card')], interval: 350
       })),
-      ...[...document.querySelectorAll('.project-grid')].map((grid) => ({
-        items: [...grid.querySelectorAll('.project-card')], interval: 350
-      })),
-      { items: [...document.querySelectorAll('.interest-item')], interval: 150 }
+      { items: [...document.querySelectorAll('.interest-card')], interval: 350 }
     ];
     let frame = 0;
     let active = true;

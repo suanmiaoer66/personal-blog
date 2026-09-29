@@ -32,8 +32,8 @@
   transition-delay: 0ms;
 }
 
-.motion-active :is(.research-heading, .section-label) { --reveal-distance: 88px; }
-.motion-active :is(.resume-row, .skill-card, .project-card, .interest-visual) {
+.motion-active .section-label { --reveal-distance: 88px; }
+.motion-active :is(.resume-row, .skill-card, .interest-card) {
   --reveal-distance: 100px;
   transition-duration: 900ms, 1100ms;
 }
@@ -80,8 +80,8 @@
 
 @media (max-width: 800px) {
   .motion-active .motion-item { --reveal-distance: 44px; }
-  .motion-active :is(.research-heading, .section-label) { --reveal-distance: 54px; }
-  .motion-active :is(.resume-row, .skill-card, .project-card, .interest-visual, .hero-visual) { --reveal-distance: 64px; }
+  .motion-active .section-label { --reveal-distance: 54px; }
+  .motion-active :is(.resume-row, .skill-card, .interest-card, .hero-visual) { --reveal-distance: 64px; }
   .motion-active .motion-item.motion-above { translate: 0 -28px; }
   .motion-active .motion-item.is-visible { translate: 0 0; }
   .motion-active .hero-copy { opacity: 1; translate: none; }
