@@ -9,10 +9,10 @@
 ## 页面结构
 
 - About：姓名、研究方向、简介、所在地与一张头像。
-- Education：教育背景。
-- Experience：工作与实习经历。
-- Technical Skills：财务分析、数据分析、工具与表达。
-- Interests & Beyond Work：三个等宽照片位置及简短说明。
+- Education：New York University 硕士与本科教育背景。
+- Experience：Frost & Sullivan、Deloitte Consulting、Marcum Asia CPAs LLP、Agricultural Bank of China (US) 的经历。
+- Technical Skills：Valuation & Modeling、Accounting & Credit、Data & Tools、Credentials & Languages，呈现为三张卡片。
+- Interest & Beyond Work：网球与高尔夫、半程马拉松与户外、国际象棋/扑克/斯诺克。
 - Contact：联络信息、地址和留言表单。
 
 原项目案例、详情弹窗、章节编号、重复英文说明、预览说明、页脚示例声明和表单常驻提示均已移除。
@@ -23,7 +23,6 @@
 
 - 在 `index.html` 修改姓名、简介、学历、经历、技能、邮箱、地址、网页标题及描述。
 - About 中的 `assets/portrait.jpg` 已替换为当前个人照片；后续可继续替换为最新照片。
-- 兴趣区保留三个照片位置。第一个使用 `assets/forest.jpg`；第二、三个为无文字的图片占位框。替换时，将 `.photo-placeholder` 容器替换为 `<div class="interest-photo"><img src="assets/your-photo.jpg" alt="照片描述" width="1200" height="800" loading="lazy"></div>`。
 - 在 `styles.css` 顶部的变量调整主题色。
 - 更新发布时同步修改 HTML 内资源版本号，避免浏览器使用旧缓存。
 
@@ -54,6 +53,5 @@ GitHub Pages 发布源为 `main` 分支根目录，推送后自动更新。`.noj
 ## 素材
 
 - 个人头像：由用户提供并保存在 `assets/portrait.jpg`。
-- 森林：https://images.unsplash.com/photo-1441974231531-c6227db76b6e
 
 图片保存在本地，不依赖外部字体、CDN 或运行时图片请求。
