@@ -12,7 +12,7 @@
 - Education：New York University 硕士与本科教育背景。
 - Experience：Frost & Sullivan、Deloitte Consulting、Marcum Asia CPAs LLP、Agricultural Bank of China (US) 的经历。
 - Technical Skills：Valuation & Modeling、Accounting & Credit、Data & Tools、Credentials & Languages，呈现为三张卡片。
-- Interest & Beyond Work：网球与高尔夫、半程马拉松与户外、国际象棋/扑克/斯诺克。
+- Interest & Beyond Work：网球与高尔夫、半程马拉松与户外、国际象棋/扑克/斯诺克，三张图文卡片使用用户提供的网球、步道和台球照片。
 - Contact：联络信息、地址和留言表单。
 
 原项目案例、详情弹窗、章节编号、重复英文说明、预览说明、页脚示例声明和表单常驻提示均已移除。
@@ -53,5 +53,6 @@ GitHub Pages 发布源为 `main` 分支根目录，推送后自动更新。`.noj
 ## 素材
 
 - 个人头像：由用户提供并保存在 `assets/portrait.jpg`。
+- 兴趣配图：用户提供，分别保存为 `assets/interest-tennis-golf.jpg`、`assets/interest-outdoors.jpg`、`assets/interest-chess-poker-snooker.jpg`。图片统一为 3:2 显示比例，网球竖图裁切到球拍主体；台球图保留原始分辨率级别，避免无意义放大。配图和文字随整张卡片渐入，鼠标悬停时轻微放大；减少动态效果模式关闭放大动画。
 
 图片保存在本地，不依赖外部字体、CDN 或运行时图片请求。
